@@ -1,0 +1,6 @@
+{
+    "service_name" : "GO-GRAPHQL-MONGO",
+    "test-port" : "8000",
+    "test-hostname" : "localhost",
+    "log-level" : "debug"
+}
