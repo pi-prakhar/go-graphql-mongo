@@ -8,7 +8,33 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - pi-network
+
+  pi-go-backend:
+    container_name : backend
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - pi-mongo-db
+    networks:
+      - pi-network
+
+  pi-next-web-client:
+    container_name: frontend
+    build: ./client-web/next-graphql
+    ports:
+      - "3000:3000"
+    networks:
+      - pi-network
+    depends_on:
+      - pi-go-backend
 
 volumes:
   mongo-data:
     driver: local
+
+networks:
+  pi-network:
+    driver: bridge

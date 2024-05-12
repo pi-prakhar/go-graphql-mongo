@@ -303,7 +303,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 	return introspection.WrapTypeFromDef(ec.Schema(), ec.Schema().Types[name]), nil
 }
 
-//go:embed "schema.graphqls"
+//go:embed "schemas/jobs.graphqls"
 var sourcesFS embed.FS
 
 func sourceData(filename string) string {
@@ -315,7 +315,7 @@ func sourceData(filename string) string {
 }
 
 var sources = []*ast.Source{
-	{Name: "schema.graphqls", Input: sourceData("schema.graphqls"), BuiltIn: false},
+	{Name: "schemas/jobs.graphqls", Input: sourceData("schemas/jobs.graphqls"), BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
@@ -2982,7 +2982,7 @@ func (ec *executionContext) unmarshalInputUpdateJobListingInput(ctx context.Cont
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"title", "description", "url"}
+	fieldsInOrder := [...]string{"title", "description", "company", "url"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -3003,6 +3003,13 @@ func (ec *executionContext) unmarshalInputUpdateJobListingInput(ctx context.Cont
 				return it, err
 			}
 			it.Description = data
+		case "company":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("company"))
+			data, err := ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Company = data
 		case "url":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("url"))
 			data, err := ec.unmarshalOString2ᚖstring(ctx, v)

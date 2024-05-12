@@ -1,6 +1,9 @@
 {
     "service_name" : "GO-GRAPHQL-MONGO",
-    "test-port" : "8000",
-    "test-hostname" : "localhost",
+    "docker" : "true",
+    "docker-mongo-uri" :"mongodb://pi-mongo-db:27017",
+    "docker-host-address" : "pi-go-backend:8000",
+    "local-mongo-uri" :"mongodb://localhost:27017",
+    "local-host-address" : ":8000",
     "log-level" : "debug"
 }

@@ -13,27 +13,48 @@ import (
 
 // CreateJobListing is the resolver for the createJobListing field.
 func (r *mutationResolver) CreateJobListing(ctx context.Context, input model.CreateJobListingInput) (*model.JobListing, error) {
-	return repository.CreateJobListing(input), nil
+	res, err := repository.CreateJobListing(input)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
 }
 
 // UpdateJobListing is the resolver for the updateJobListing field.
 func (r *mutationResolver) UpdateJobListing(ctx context.Context, id string, input model.UpdateJobListingInput) (*model.JobListing, error) {
-	return repository.UpdateJobListing(id, input), nil
+	res, err := repository.UpdateJobListing(id, input)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
 }
 
 // DeleteJobListing is the resolver for the deleteJobListing field.
 func (r *mutationResolver) DeleteJobListing(ctx context.Context, id string) (*model.DeleteJobResponse, error) {
-	return repository.DeleteJobListing(id), nil
+	res, err := repository.DeleteJobListing(id)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
 }
 
 // Jobs is the resolver for the jobs field.
 func (r *queryResolver) Jobs(ctx context.Context) ([]*model.JobListing, error) {
-	return repository.GetJobs(), nil
+	res, err := repository.GetJobs()
+	if err != nil {
+		return res, err
+	}
+	return res, nil
+
 }
 
 // Job is the resolver for the job field.
 func (r *queryResolver) Job(ctx context.Context, id string) (*model.JobListing, error) {
-	return repository.GetJob(id), nil
+	res, err := repository.GetJob(id)
+	if err != nil {
+		return res, err
+	}
+	return res, nil
 }
 
 // Mutation returns MutationResolver implementation.

@@ -1,14 +1,12 @@
 package main
 
 import (
-	"log"
+	"fmt"
 	"net/http"
-	"os"
+	"time"
 
-	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/pi-prakhar/go-graphql-mongo/api"
 	"github.com/pi-prakhar/go-graphql-mongo/internal/config/db"
-	"github.com/pi-prakhar/go-graphql-mongo/internal/graph"
 	"github.com/pi-prakhar/go-graphql-mongo/pkg/logger"
 	"github.com/pi-prakhar/utils/loader"
 )
@@ -18,7 +16,6 @@ func init() {
 	logger.Log.Info("GO-PHONE-OTP-SERVICE Logger Started")
 
 	err := loader.LoadEnv()
-
 	if err != nil {
 		logger.Log.Error("Failed to Load ENV", err)
 	}
@@ -26,19 +23,19 @@ func init() {
 	db.Connect()
 }
 
-const defaultPort = "8080"
-
 func main() {
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = defaultPort
+	hostAddress, err := loader.GetValueFromConf("local-host-address")
+	if err != nil {
+		logger.Log.Error("Error : Failed to load local-host-address from configuration", err)
 	}
 
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+	srv := &http.Server{
+		Handler:      api.Router(),
+		Addr:         hostAddress,
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
 
-	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", srv)
-
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	logger.Log.Info(fmt.Sprintf("connect to http://localhost%s/playground for GraphQL playground", hostAddress))
+	logger.Log.Error("Error : Failed to start server", srv.ListenAndServe())
 }
