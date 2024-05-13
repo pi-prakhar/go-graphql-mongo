@@ -11,7 +11,7 @@ import (
 )
 
 func gqlPlaygroundHandler() http.HandlerFunc {
-	return playground.Handler("GraphQL playground", "/query")
+	return playground.Handler("GraphQL playground", "/api/query")
 }
 
 func queryHandler() http.HandlerFunc {

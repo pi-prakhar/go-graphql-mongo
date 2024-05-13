@@ -21,17 +21,17 @@ services:
     networks:
       - pi-network
 
-  pi-next-web-client:
-    container_name: frontend
-    build: ./client-web/next-graphql
-    ports:
-      - "3000:3000"
-    networks:
-      - pi-network
-    links:
-      - pi-go-backend
-    depends_on:
-      - pi-go-backend
+  # pi-next-web-client:
+  #   container_name: frontend
+  #   build: ./client-web/next-graphql
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - pi-network
+  #   links:
+  #     - pi-go-backend
+  #   depends_on:
+  #     - pi-go-backend
 
 volumes:
   mongo-data:

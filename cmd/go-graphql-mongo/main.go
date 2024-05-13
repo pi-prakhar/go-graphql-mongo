@@ -25,7 +25,7 @@ func init() {
 }
 
 func main() {
-	hostAddress, err := loader.GetValueFromConf("docker-host-address")
+	hostAddress, err := loader.GetValueFromConf("local-host-address")
 	if err != nil {
 		logger.Log.Error("Error : Failed to load local-host-address from configuration", err)
 	}
@@ -45,6 +45,6 @@ func main() {
 		ReadTimeout:  15 * time.Second,
 	}
 
-	logger.Log.Info(fmt.Sprintf("connect to %s/playground for GraphQL playground", hostAddress))
+	logger.Log.Info(fmt.Sprintf("connect to localhost%s/playground for GraphQL playground", hostAddress))
 	logger.Log.Error("Error : Failed to start server", srv.ListenAndServe())
 }
