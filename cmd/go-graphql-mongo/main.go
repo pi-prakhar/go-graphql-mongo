@@ -9,6 +9,7 @@ import (
 	"github.com/pi-prakhar/go-graphql-mongo/internal/config/db"
 	"github.com/pi-prakhar/go-graphql-mongo/pkg/logger"
 	"github.com/pi-prakhar/utils/loader"
+	"github.com/rs/cors"
 )
 
 func init() {
@@ -24,18 +25,26 @@ func init() {
 }
 
 func main() {
-	hostAddress, err := loader.GetValueFromConf("local-host-address")
+	hostAddress, err := loader.GetValueFromConf("docker-host-address")
 	if err != nil {
 		logger.Log.Error("Error : Failed to load local-host-address from configuration", err)
 	}
 
+	corsHandler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedMethods:   []string{"POST", "GET"},
+		AllowedHeaders:   []string{"Authorization", "Content-Type"},
+		AllowCredentials: true,
+		Debug:            true,
+	}).Handler(api.Router())
+
 	srv := &http.Server{
-		Handler:      api.Router(),
+		Handler:      corsHandler,
 		Addr:         hostAddress,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
-	logger.Log.Info(fmt.Sprintf("connect to http://localhost%s/playground for GraphQL playground", hostAddress))
+	logger.Log.Info(fmt.Sprintf("connect to %s/playground for GraphQL playground", hostAddress))
 	logger.Log.Error("Error : Failed to start server", srv.ListenAndServe())
 }

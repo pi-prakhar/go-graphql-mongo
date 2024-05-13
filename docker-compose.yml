@@ -28,6 +28,8 @@ services:
       - "3000:3000"
     networks:
       - pi-network
+    links:
+      - pi-go-backend
     depends_on:
       - pi-go-backend
 
