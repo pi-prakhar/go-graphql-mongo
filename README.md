@@ -2,7 +2,7 @@
 
 This Go project demonstrates the usage of GraphQL to create job listings. Users can create, update, and delete these job listings using various GraphQL queries and mutations. The project utilizes the [gqlgen](https://github.com/99designs/gqlgen) library to simplify GraphQL server implementation.
 
-## installation
+## Installation
 
 1. **Clone the repository:**
 
@@ -120,7 +120,10 @@ Variables:
 {
   "id": "",
   "input": {
-    "title": ""
+    "title": "",
+    "description": "",
+    "company": "",
+    "url": ""
   }
 }
 ```
@@ -142,7 +145,7 @@ Variables:
 }
 ```
 
-### Interact with the Service using client :
+## Interact with the Service using client :
 
 To interact with the service in interactive mode, you can use the web client built using Next.js.
 
