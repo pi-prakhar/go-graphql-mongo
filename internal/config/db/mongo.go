@@ -27,9 +27,20 @@ func getConnectionString() string {
 			logger.Log.Error("Error : Failed to fetch docker-mongo-uri property from configurations", err)
 		}
 	} else {
-		connectionString, err = loader.GetValueFromConf("local-mongo-uri")
+		isMongoAtlas, err := loader.GetValueFromConf("mongo-atlas")
 		if err != nil {
-			logger.Log.Error("Error : Failed to fetch local-mongo-uri property from configurations", err)
+			logger.Log.Error("Error : Failed to fetch mongo-atlas property from configuration", err)
+		}
+		if isMongoAtlas == "true" {
+			connectionString, err = loader.GetValueFromEnv("MONGO_ATLAS_URI")
+			if err != nil {
+				logger.Log.Error("Error : Failed to fetch MONGO_ATLAS_URI property from env", err)
+			}
+		} else {
+			connectionString, err = loader.GetValueFromConf("local-mongo-uri")
+			if err != nil {
+				logger.Log.Error("Error : Failed to fetch local-mongo-uri property from configurations", err)
+			}
 		}
 	}
 	return connectionString
