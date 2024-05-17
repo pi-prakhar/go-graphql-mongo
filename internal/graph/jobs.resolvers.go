@@ -45,7 +45,6 @@ func (r *queryResolver) Jobs(ctx context.Context) ([]*model.JobListing, error) {
 		return res, err
 	}
 	return res, nil
-
 }
 
 // Job is the resolver for the job field.
