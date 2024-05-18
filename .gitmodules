@@ -1,4 +1,4 @@
 [submodule "client-web/next-graphql"]
     path = client-web/next-graphql
     url = git@github.com:pi-prakhar/next-graphql.git
-
+    branch = master
