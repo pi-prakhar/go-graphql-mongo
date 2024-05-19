@@ -27,7 +27,7 @@ func init() {
 func main() {
 	hostAddress := utils.GetHostAddress()
 	corsHandler := cors.New(cors.Options{
-		AllowedOrigins:   []string{"localhost:3000", "pi-go-backend:8000", "localhost:8000"},
+		AllowedOrigins:   []string{"http://localhost:3000", "pi-go-backend:8000", "http://localhost:8000"},
 		AllowedMethods:   []string{"POST", "GET"},
 		AllowedHeaders:   []string{"Authorization", "Content-Type"},
 		AllowCredentials: true,
