@@ -7,7 +7,8 @@ This Go project demonstrates the usage of GraphQL to create job listings. Users 
 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/pi-prakhar/go-graphql-mongo.git
+git clone --recursive https://github.com/pi-prakhar/go-graphql-mongo.git
+git submodule update --init --recursive
 ```
 
 3. **To start the project in Docker:**
